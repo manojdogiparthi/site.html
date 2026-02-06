@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Be My Valentine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display&display=swap" rel="stylesheet">
+  <style>
+    body { font-family:'Playfair Display',serif; text-align:center; padding:80px; overflow:hidden; }
+    h1 { font-family:'Great Vibes',cursive; font-size:4em; color:#b22222; }
+    p { font-size:1.5em; color:#4b2c2c; }
+    .button { background:#b22222; color:white; padding:15px 40px; border:none; border-radius:30px; cursor:pointer; margin:15px; }
+    .button:hover { background:#8b0000; transform:scale(1.05); }
+    .photo-frame img { border-radius:12px; max-width:300px; height:auto; }
+    .heart { position:absolute; color:#b22222; font-size:2em; animation:floatUp 6s infinite; }
+    @keyframes floatUp { 0%{transform:translateY(100vh) scale(0.5);opacity:0;} 50%{opacity:1;} 100%{transform:translateY(-10vh) scale(1.2);opacity:0;} }
+    .section { display:none; }
+    .active { display:block; }
+    #yesPage { background:pink; padding:80px; }
+    #noPage { background:#fff0f5; padding:80px; }
+    #noPage img { max-width:300px; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.2); }
+  </style>
+</head>
+<body>
+  <!-- Main Page -->
+  <div id="mainPage" class="section active">
+    <h1>Will You Be My Valentine? ❤️</h1>
+    <div class="photo-frame">
+      <img src="couple.jpeg" alt="Us Together">
+    </div>
+    <p>From the moment I met you, my world has been brighter.<br>This Valentine’s Day, I want to ask you something special…</p>
+    <button class="button" onclick="navigate('yes')">Yes</button>
+    <button class="button" onclick="navigate('no')">No</button>
+    <div class="music">
+      <p>🎶 Our Song:</p>
+      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2X59iW5mtqTuUewqZ1fQdY" width="300" height="80" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+    </div>
+  </div>
+
+  <!-- Yes Page -->
+  <div id="yesPage" class="section">
+    <h1>I know you will always choose me my princess 💖</h1>
+    <p>I'm glad you came into my life. I will make you proud.</p>
+    <p><strong>My pretty lady deserves a little gift for choosing the right option 🎁</strong></p>
+  </div>
+
+  <!-- No Page -->
+  <div id="noPage" class="section">
+    <h1>OOPS … page not found</h1>
+    <p>Choose the right option BITCH 😅</p>
+    <img src="delta.png" alt="Funny Error">
+  </div>
+
+  <script>
+    function createHeart(){const h=document.createElement("div");h.className="heart";h.innerHTML="♥";h.style.left=Math.random()*100+"vw";h.style.animationDuration=(3+Math.random()*3)+"s";document.body.appendChild(h);setTimeout(()=>h.remove(),6000);}
+    setInterval(createHeart,500);
+
+    function navigate(page){
+      location.hash = page; // updates URL hash so Back button works
+      showPage(page+"Page");
+    }
+
+    function showPage(pageId){
+      document.querySelectorAll('.section').forEach(sec=>sec.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+    }
+
+    // Handle back/forward navigation
+    window.addEventListener("hashchange", ()=>{
+      const hash = location.hash.replace("#","");
+      if(hash==="yes") showPage("yesPage");
+      else if(hash==="no") showPage("noPage");
+      else showPage("mainPage");
+    });
+  </script>
+</body>
+</html>
